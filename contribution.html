@@ -1,17 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Team Contribution</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Contribution</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      padding: 24px; background: #f5f6fb; color: #20243a;
+      font-family: Arial, sans-serif;
+    }
+    main {
+      width: min(520px, 100%); padding: 32px; background: white;
+      border: 1px solid #e7e9f1; border-radius: 18px;
+      box-shadow: 0 12px 35px rgba(37, 32, 77, .07);
+    }
+    h1 { margin-top: 0; }
+    button {
+      padding: 11px 16px; border: 0; border-radius: 9px;
+      background: #6558d3; color: white; font-weight: 700; cursor: pointer;
+    }
+    button:hover { background: #5145bb; }
+    #contributor-student-id { margin: 18px 0; font-weight: 700; }
+    #message { color: #b42318; }
+    a { color: #6558d3; font-weight: 700; }
+  </style>
 </head>
 <body>
+  <main>
     <h1>Team Contribution</h1>
-    <div id="author-info">
-        <p><strong>Student ID:</strong> 71663</p>
-        <p><strong>Name:</strong> Oleh Shcherbakov</p>
-    </div>
-    <br>
+    <button id="load-contributor" type="button">Show Contributor</button>
+    <p id="contributor-student-id" aria-live="polite"></p>
+    <p id="message" role="status" aria-live="polite"></p>
     <a href="index.html">Back to Task Manager</a>
+  </main>
+
+  <script>
+    const button = document.getElementById("load-contributor");
+    const studentIdElement = document.getElementById("contributor-student-id");
+    const messageElement = document.getElementById("message");
+
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      messageElement.textContent = "";
+      studentIdElement.textContent = "";
+
+      try {
+        const response = await fetch("./contribution.json", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`Could not load contribution.json (HTTP ${response.status}).`);
+        }
+
+        const data = await response.json();
+        if (!data.contributorStudentId) {
+          throw new Error("contributorStudentId is missing from contribution.json.");
+        }
+
+        studentIdElement.textContent = `Contributor Student ID: ${data.contributorStudentId}`;
+      } catch (error) {
+        messageElement.textContent = error.message;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
