@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css"> 
+<body>
+    <header>
+        <h1>Task Manager</h1>
+        <!-- Required element with your Vistula student ID -->
+        <p>Student ID: <span id="student-id">71663</span></p>
+    </header>
+
+    <main>
+        <!-- Required task creation/editing form -->
+        <form id="task-form">
+            <div>
+                <label for="task-title">Task Title (required):</label><br>
+                <input type="text" id="task-title" required>
+            </div>
+            <div>
+                <label for="task-description">Task Description:</label><br>
+                <textarea id="task-description"></textarea>
+            </div>
+            <button type="submit" id="task-submit">Save Task</button>
+        </form>
+
+        <!-- Required status and error message element -->
+        <div id="status-message"></div>
+
+        <!-- Required container for task list -->
+        <section>
+            <h2>Task List</h2>
+            <div id="task-list">
+                <!-- Dynamic tasks from database will load here -->
+            </div>
+        </section>
+
+        <!-- Required link to contribution page -->
+        <footer>
+            <p><a href="contribution.html" id="contribution-link">Team Contribution Page</a></p>
+        </footer>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
